@@ -173,18 +173,20 @@ export default function Vaction() {
       title: 'Action',
       key: 'action',
       align: 'center',
-      render: (_, { id, endDate }) => (
+      render: (_, { id, endDate, state }) => (
         <Popconfirm
           title="목록 삭제"
           description="삭제하시겠습니까?"
           onConfirm={() => handleCancelSchedule(id)}
           okText="Yes"
           cancelText="No"
-          disabled={pastDates(dayjs(endDate))}
+          disabled={pastDates(dayjs(endDate)) || state === 'REJECT'}
         >
           <Button
             size="small"
-            disabled={isLoading || pastDates(dayjs(endDate))}
+            disabled={
+              isLoading || pastDates(dayjs(endDate)) || state === 'REJECT'
+            }
             danger
           >
             삭제

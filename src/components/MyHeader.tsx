@@ -10,6 +10,7 @@ import { deleteAccessTokenFromCookie } from '@/utils/cookies';
 import { IsManagerAtom } from '@/recoil/IsManagerAtom';
 import { getUserHeader } from '@/api/home/getUserHeader';
 import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
+import { UserEmailAtom } from '@/recoil/UserEmailAtom';
 
 export default function MyHeader() {
   // antd theme
@@ -34,8 +35,9 @@ export default function MyHeader() {
     usedVacation: '',
   });
 
-  // 매니저여부 set하는 함수
+  // 매니저여부, 사용자 이메일 set하는 함수
   const setIsManager = useSetRecoilState(IsManagerAtom);
+  const setUserEmail = useSetRecoilState(UserEmailAtom);
 
   // 통신 loading
   const [isMyHeaderLoading, setIsMyHeaderLoading] = useState(false);
@@ -56,8 +58,9 @@ export default function MyHeader() {
             userName: userData.userName,
             position: userData.position,
           });
-          // 헤더정보는 항상 노출이 되는 부분이기 때문에 관리자 여부를 여기에서 세팅해줌
+          // 헤더정보는 항상 노출이 되는 부분이기 때문에 관리자 여부, 사용자 이메일을 여기에서 세팅해줌
           setIsManager(userData.position === 'MANAGER');
+          setUserEmail(userData.userEmail);
           return;
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -112,6 +115,7 @@ export default function MyHeader() {
           backgroundColor: colorPrimaryBg,
           height: 60,
           borderBottom: '1px solid #eee',
+          padding: '0 20px',
         }}
       >
         <div
