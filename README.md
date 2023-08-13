@@ -6,7 +6,9 @@
 
 패스트캠퍼스 백엔드 5기 3분과 팀을 이루어 협업을 진행하였습니다.
 
-[결과물 보러가기](https://kdt-5-mini-team-11-eifz.vercel.app/)
+[기존 결과물 보러가기](https://kdt-5-mini-team-11-eifz.vercel.app/)
+
+[프로젝트 끝난 후 추가 결과물 보러가기](https://team-project-vacation-management.vercel.app/)
 
 ## 11조 개쩌는팀 소개
 
@@ -386,3 +388,9 @@ useEffect(() => {
     getUsersYearlySchedules();
   }, [year, accessToken, userEmail]);
 ```
+
+## 프로젝트가 끝난 후 수정
+
+- 프로필 이미지 수정 썸네일 출력 안되는 부분 수정 및 관련 스타일 수정
+- 체크박스를 사용해서 연차/당직 구분
+- signup 컴포넌트 가독성이 좋지 않은거 같아서 일부 컴포넌트 분리작업 하였음.
