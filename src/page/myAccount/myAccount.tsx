@@ -21,12 +21,13 @@ import { POSITIONS } from '@/data/constants';
 import formatPhoneNumber from '@/utils/formatPhonenumber';
 import { useEffect, useState } from 'react';
 import { getMyAccount } from '@/api/myAccount/getMyAccount';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { AccessTokenAtom } from '@/recoil/AccessTokkenAtom';
 import { changeMyInfo } from '@/api/myAccount/changeMyInfo';
 import PasswordChangeModal from '@/page/myAccount/passwordChangeModal';
 import { handleUpload } from '@/api/auth/cloudinary';
 import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
+import { ImgUrlAtom } from '@/recoil/ImgUrlAtom';
 
 interface MyAccountInfoType {
   phoneNumber: string;
@@ -59,7 +60,7 @@ export default function MyAccount() {
   const accessToken = useRecoilValue(AccessTokenAtom);
 
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [imgUrl, setimgUrl] = useState('');
+  const [imgUrl, setimgUrl] = useRecoilState(ImgUrlAtom);
 
   useEffect(() => {
     const getData = async () => {
