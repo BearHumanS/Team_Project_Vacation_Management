@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Form, Button, message } from 'antd';
+import { Form, Button, message, Tooltip, Spin, Space } from 'antd';
 import { SignupFormProps } from '../signupForm';
 import { verificationEmail } from '@/api/auth/verification';
 import EmailChecked from './emailChecked';
@@ -11,9 +11,11 @@ import {
   ResendAtom,
   TimerAtom,
   EmailVerifiedAtom,
+  VerificationAtom,
 } from '@/recoil/EmailRecoil';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { AxiosResponse } from 'axios';
+import { RedoOutlined, LoadingOutlined } from '@ant-design/icons';
 
 export interface EmailProps extends SignupFormProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,13 +32,15 @@ export default function Email({ form, messageApi }: EmailProps) {
   // 이메일 인증 번호 재발송 ui
   const setReSend = useSetRecoilState(ResendAtom);
   // 이메일 인증 과정 로딩 (중복체크, 인증번호 발송, 인증확인)
-  const setIsLoading = useSetRecoilState(IsLoadingAtom);
+  const [isLoading, setIsLoading] = useRecoilState(IsLoadingAtom);
   // 이메일 인증번호 확인
   const [emailVerified, setEmailVerified] = useRecoilState(EmailVerifiedAtom);
   // 이메일 인증 번호 발송
-  const [verification, setVerification] = useState(false);
+  const [verification, setVerification] = useRecoilState(VerificationAtom);
   // 이메일 인증 번호 발송 후에 제출 가능 타이머
   const [timer, setTimer] = useRecoilState(TimerAtom);
+
+  const [reLoading, setReLoading] = useState(false);
 
   // 이메일 인증번호 발송
   const handleVerificationEmail = async () => {
@@ -88,10 +92,16 @@ export default function Email({ form, messageApi }: EmailProps) {
 
   // 이메일 인증을 다시 처음부터 하게 하는 재인증 기능
   const handleReAuthentication = () => {
-    setIsEmailCheck(false);
-    setVerification(false);
-    setEmailVerified(false);
-    setReSend(false);
+    if (isLoading) return;
+    setReLoading(true);
+
+    setTimeout(() => {
+      setIsEmailCheck(false);
+      setVerification(false);
+      setEmailVerified(false);
+      setReSend(false);
+      setReLoading(false);
+    }, 500);
   };
 
   return (
@@ -123,17 +133,48 @@ export default function Email({ form, messageApi }: EmailProps) {
             ) : (
               // 인증 번호 입력 창과 제출 버튼
               <div>
-                <EmailAuth
-                  form={form}
-                  handleVerificationEmail={handleVerificationEmail}
-                />
+                <Space>
+                  <EmailAuth
+                    form={form}
+                    handleVerificationEmail={handleVerificationEmail}
+                  />
+                  {reLoading ? (
+                    <Spin indicator={<LoadingOutlined spin />} />
+                  ) : (
+                    <Tooltip title={'이메일 중복 체크로 돌아갑니다.'}>
+                      <RedoOutlined
+                        onClick={handleReAuthentication}
+                        style={{
+                          cursor: isLoading ? 'not-allowed' : 'pointer',
+                          opacity: isLoading ? 0.5 : 1,
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                </Space>
                 <div>남은 시간: {timer}초</div>
               </div>
             )
           ) : (
-            <EmailVerification
-              handleVerificationEmail={handleVerificationEmail}
-            />
+            <Space>
+              <EmailVerification
+                handleVerificationEmail={handleVerificationEmail}
+                reLoading={reLoading}
+              />
+              {reLoading ? (
+                <Spin indicator={<LoadingOutlined spin />} />
+              ) : (
+                <Tooltip title={'이메일 중복 체크로 돌아갑니다.'}>
+                  <RedoOutlined
+                    onClick={handleReAuthentication}
+                    style={{
+                      cursor: isLoading ? 'not-allowed' : 'pointer',
+                      opacity: isLoading ? 0.5 : 1,
+                    }}
+                  />
+                </Tooltip>
+              )}
+            </Space>
           )
         ) : (
           <EmailChecked messageApi={messageApi} form={form} />

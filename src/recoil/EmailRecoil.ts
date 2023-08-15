@@ -24,3 +24,8 @@ export const TimerAtom = atom({
   key: 'TimerAtom',
   default: 0,
 });
+
+export const VerificationAtom = atom({
+  key: 'VerificationAtom ',
+  default: false,
+});

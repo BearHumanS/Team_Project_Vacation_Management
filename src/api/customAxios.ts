@@ -9,13 +9,13 @@ import getPayloadFromJWT from '@/utils/getPayloadFromJWT';
 
 export const customAxios = axios.create({
   baseURL: BASE_API_URL,
-  timeout: 7000, // 5초간 아무 응답이 없으면 취소
+  timeout: 5000,
 });
 
 customAxios.interceptors.request.use(
   async (req) => {
     const accessToken = getAccessTokenFromCookie();
-    // accessToken이 없는 경우 === 로그아웃을 한 상태에서하는 요청들 : 회원가입, 이메일중복체크, 로그인), 그런데 있어도 되는듯
+
     if (!accessToken) {
       return req;
     }

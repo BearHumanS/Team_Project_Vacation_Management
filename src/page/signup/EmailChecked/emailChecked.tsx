@@ -31,7 +31,7 @@ export default function EmailChecked({ messageApi, form }: EmailProps) {
         type: 'error',
         content:
           error.response?.data.error.message ||
-          '이메일 중복체크에 실패하였습니다. 관리자에게 문의하세요.',
+          '이메일 중복체크에 실패하였습니다.',
       });
     } finally {
       setIsLoading(false);

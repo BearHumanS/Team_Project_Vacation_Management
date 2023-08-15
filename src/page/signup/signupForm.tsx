@@ -11,7 +11,13 @@ import Email from './EmailChecked/email';
 import EmailValidation from './EmailValidation/emailValidation';
 import PasswordValidation from './PasswordValidation/passwordValidation';
 import ProfileImg from './ProfileImageUrl/profileImg';
-import SelectPosition from './SelectPostion/SelectPosition';
+import SelectPosition from './SelectPostion/selectPosition';
+import {
+  IsEmailCheckAtom,
+  ResendAtom,
+  EmailVerifiedAtom,
+  VerificationAtom,
+} from '@/recoil/EmailRecoil';
 
 interface valuseType {
   confirm_password: string;
@@ -37,6 +43,11 @@ export default function SignupForm({ messageApi }: SignupFormProps) {
 
   const setAccessToken = useSetRecoilState(AccessTokenAtom);
   const navigate = useNavigate();
+
+  const setIsEmailCheck = useSetRecoilState(IsEmailCheckAtom);
+  const setReSend = useSetRecoilState(ResendAtom);
+  const setEmailVerified = useSetRecoilState(EmailVerifiedAtom);
+  const setVerification = useSetRecoilState(VerificationAtom);
 
   const onFinish = async (values: valuseType) => {
     // 클라우디너리로 전송한 이미지 url 가져옴
@@ -114,6 +125,18 @@ export default function SignupForm({ messageApi }: SignupFormProps) {
     return imageUrl;
   };
 
+  const goHomeAndResetForm = () => {
+    // 홈으로 이동
+    navigate('/');
+    setIsEmailCheck(false);
+    setEmailVerified(false);
+    setVerification(false);
+    setReSend(false);
+
+    // Form의 값을 초기화
+    form.resetFields();
+  };
+
   return (
     <>
       <Form
@@ -182,7 +205,7 @@ export default function SignupForm({ messageApi }: SignupFormProps) {
               borderRadius: '0px 0px 0px 8px',
               borderTop: '1px solid #eee',
             }}
-            onClick={() => navigate('/')}
+            onClick={goHomeAndResetForm}
           >
             홈으로
           </Button>
