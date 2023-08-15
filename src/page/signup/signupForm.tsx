@@ -194,7 +194,7 @@ export default function SignupForm({ messageApi }: SignupFormProps) {
         </div>
 
         <ButtonGroup
-          style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}
+          style={{ position: 'relative', bottom: 0, left: 0, width: '100%' }}
         >
           <Button
             size="large"

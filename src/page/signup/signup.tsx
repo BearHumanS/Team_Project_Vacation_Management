@@ -7,7 +7,6 @@ export default function Signup() {
     <div
       style={{
         background: '#eee',
-        height: '100vh',
         boxSizing: 'border-box',
         padding: 70,
         display: 'flex',
