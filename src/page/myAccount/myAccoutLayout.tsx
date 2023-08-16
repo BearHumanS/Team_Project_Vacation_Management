@@ -64,6 +64,8 @@ export default function MyAccountLayout() {
   return (
     <Layout>
       <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
         width={300}
         style={{ minHeight: 'calc(100vh - 60px) ', background: 'white' }}
       >

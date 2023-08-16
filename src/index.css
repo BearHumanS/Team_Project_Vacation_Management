@@ -64,3 +64,9 @@
   vertical-align: middle;
   margin: 0;
 }
+
+.ant-layout .ant-layout-sider-zero-width-trigger {
+  width: 30px;
+  height: 30px;
+  inset-inline-end: -30px;
+}

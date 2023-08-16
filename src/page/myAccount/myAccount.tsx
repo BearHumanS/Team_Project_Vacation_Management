@@ -221,7 +221,7 @@ export default function MyAccount() {
       <Descriptions
         title="내 정보"
         bordered
-        column={{ md: 2, sm: 1 }}
+        column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
         size="small"
         labelStyle={{ textAlign: 'center' }}
       >
