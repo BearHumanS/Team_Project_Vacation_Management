@@ -301,12 +301,13 @@ export default function Home() {
         }}
       >
         <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
           width={300}
           style={{
             background: 'white',
             paddingTop: 20,
           }}
-          className="booh"
         >
           <div
             style={{
