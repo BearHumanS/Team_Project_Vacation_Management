@@ -73,8 +73,8 @@ export default function Calendar({
   };
 
   const options = [
-    { label: '연차', value: 'ANNUAL' },
-    { label: '당직', value: 'DUTY' },
+    { label: '연차', value: 'ANNUAL', className: 'annual-label' },
+    { label: '당직', value: 'DUTY', className: 'duty-label' },
   ];
 
   const [messageApi, contextHolder] = message.useMessage();

@@ -70,3 +70,11 @@
   height: 30px;
   inset-inline-end: -30px;
 }
+
+label.ant-checkbox-wrapper.ant-checkbox-wrapper-checked.ant-checkbox-group-item.css-dev-only-do-not-override-11x8shi:first-child {
+  color: #b1aee5;
+}
+
+label.ant-checkbox-wrapper.ant-checkbox-wrapper-checked.ant-checkbox-group-item.css-dev-only-do-not-override-11x8shi {
+  color: #f08080;
+}
