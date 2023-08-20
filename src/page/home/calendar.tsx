@@ -8,9 +8,9 @@ import {
   Space,
   Typography,
   Tooltip,
-  Skeleton,
   Checkbox,
   message,
+  Spin,
 } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { ScheduleItem } from './home';
@@ -21,7 +21,7 @@ interface propsType {
   events: ScheduleItem[];
   year: number;
   setYear: Dispatch<React.SetStateAction<number>>;
-  userYearlySchedulesLoading: boolean;
+  usersYearlySchedulesLoading: boolean;
 }
 
 export default function Calendar({
@@ -29,7 +29,7 @@ export default function Calendar({
   year,
   setYear,
   events,
-  userYearlySchedulesLoading,
+  usersYearlySchedulesLoading,
 }: propsType) {
   // 데이터로 받아올 events를 상태관리
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -43,12 +43,6 @@ export default function Calendar({
   const calendarRef = useRef<FullCalendar | null>(null);
 
   const { Title } = Typography;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderDayCellContent = (args: any) => {
-    // '일' 문자 제거
-    return args.date.getDate();
-  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDateSet = (info: any) => {
@@ -131,7 +125,7 @@ export default function Calendar({
               defaultChecked
               checked={isAllChecked}
               onChange={(check) => setIsAllChecked(check)}
-              loading={userYearlySchedulesLoading}
+              loading={usersYearlySchedulesLoading}
             />
           </Tooltip>
 
@@ -176,26 +170,31 @@ export default function Calendar({
         <div style={{ flex: 1 }}></div>
       </div>
       <div style={{ padding: '0 20px 20px 20px' }}>
-        {userYearlySchedulesLoading ? (
-          <Skeleton.Input
-            active
-            block
-            style={{ height: 'calc(100vh - 140px)' }}
+        {usersYearlySchedulesLoading ? (
+          <Spin
+            size="large"
+            style={{
+              position: 'absolute',
+              zIndex: 20,
+              top: '50%',
+              left: 'calc(50% + 120px)',
+            }}
           />
         ) : (
-          <FullCalendar
-            plugins={[dayGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            dayMaxEvents={true}
-            events={getFilteredEvents()} // 연차 당직 달력에 표시
-            height={'calc(100vh - 140px)'}
-            datesSet={handleDateSet}
-            locale={'ko'} // 지역
-            dayCellContent={renderDayCellContent} // '일' 문자 렌더링 변경
-            ref={calendarRef}
-            headerToolbar={false}
-          />
+          <></>
         )}
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          dayMaxEvents={true}
+          events={getFilteredEvents()} // 연차 당직 달력에 표시
+          height={'calc(100vh - 140px)'}
+          datesSet={handleDateSet}
+          locale={'ko'} // 지역
+          dayCellContent={(args) => args.date.getDate()}
+          ref={calendarRef}
+          headerToolbar={false}
+        />
       </div>
     </>
   );

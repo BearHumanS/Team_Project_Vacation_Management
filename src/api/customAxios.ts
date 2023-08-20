@@ -5,7 +5,7 @@ import {
   setAccessTokenToCookie,
 } from '@/utils/cookies';
 import axios from 'axios';
-import getPayloadFromJWT from '@/utils/getPayloadFromJWT';
+// import getPayloadFromJWT from '@/utils/getPayloadFromJWT';
 
 export const customAxios = axios.create({
   baseURL: BASE_API_URL,
@@ -24,13 +24,13 @@ customAxios.interceptors.request.use(
     req.headers.Authorization = `Bearer ${accessToken}`;
 
     // // 만료시간 표시
-    // access토큰의 만료시간을 초로 나타낸 시간
-    const expirationTime = getPayloadFromJWT(accessToken).exp as number;
-    // 현재시간을 초로 나타냄
-    const currentTime = Math.floor(new Date().getTime() / 1000);
-    // 만료시간 > 5분 남은 경우
-    const expirationLeft = expirationTime - currentTime;
-    console.log(`만료 ${Math.floor(expirationLeft / 60)}분 남았습니다.`);
+    // // access토큰의 만료시간을 초로 나타낸 시간
+    // const expirationTime = getPayloadFromJWT(accessToken).exp as number;
+    // // 현재시간을 초로 나타냄
+    // const currentTime = Math.floor(new Date().getTime() / 1000);
+    // // 만료시간 > 5분 남은 경우
+    // const expirationLeft = expirationTime - currentTime;
+    // console.log(`만료 ${Math.floor(expirationLeft / 60)}분 남았습니다.`);
 
     return req;
   },
