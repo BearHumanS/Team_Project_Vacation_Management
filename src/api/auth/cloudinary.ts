@@ -27,6 +27,7 @@ export const handleS3Upload = async (file: string | Blob) => {
   try {
     const res = await axios.post(
       `https://nextjs-s3-upload-test.vercel.app/api/s3-upload`,
+      formData,
     );
 
     return res;
