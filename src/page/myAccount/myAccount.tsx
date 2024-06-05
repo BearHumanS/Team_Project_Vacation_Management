@@ -25,7 +25,7 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { AccessTokenAtom } from '@/recoil/AccessTokkenAtom';
 import { changeMyInfo } from '@/api/myAccount/changeMyInfo';
 import PasswordChangeModal from '@/page/myAccount/passwordChangeModal';
-import { handleUpload } from '@/api/auth/cloudinary';
+import { /* handleUpload,  */ handleS3Upload } from '@/api/auth/cloudinary';
 import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
 import { ImgUrlAtom } from '@/recoil/ImgUrlAtom';
 
@@ -165,7 +165,7 @@ export default function MyAccount() {
 
     try {
       if (file.profileThumbUrl && file.profileThumbUrl.length > 0) {
-        const response = await handleUpload(
+        const response = await handleS3Upload(
           file.profileThumbUrl[0].originFileObj,
         );
         if (response?.status === 200) {
