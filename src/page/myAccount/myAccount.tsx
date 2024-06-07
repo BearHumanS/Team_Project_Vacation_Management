@@ -25,7 +25,7 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { AccessTokenAtom } from '@/recoil/AccessTokkenAtom';
 import { changeMyInfo } from '@/api/myAccount/changeMyInfo';
 import PasswordChangeModal from '@/page/myAccount/passwordChangeModal';
-import { handleUpload /* handleS3Upload */ } from '@/api/auth/cloudinary';
+import { /* handleUpload */ handleS3Upload } from '@/api/auth/cloudinary';
 import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
 import { ImgUrlAtom } from '@/recoil/ImgUrlAtom';
 
@@ -165,13 +165,13 @@ export default function MyAccount() {
 
     try {
       if (file.profileThumbUrl && file.profileThumbUrl.length > 0) {
-        const response = await handleUpload(
+        const response = await handleS3Upload(
           file.profileThumbUrl[0].originFileObj,
         );
         if (response?.status === 200) {
           const data = response.data;
-          imageUrl = data.url; // 이미지 URL을 받아옴
-          /* imageUrl = data.fileName; S3 데이터*/
+          /* imageUrl = data.url; */ // 이미지 URL을 받아옴
+          imageUrl = data.fileName; //S3 데이터
         } else {
           throw new Error('이미지 업로드에 실패하였습니다.');
         }
