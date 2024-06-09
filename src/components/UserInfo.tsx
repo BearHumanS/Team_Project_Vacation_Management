@@ -1,10 +1,12 @@
 import { Badge, Typography, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import { POSITIONS } from '@/data/constants';
+import { useRecoilValue } from 'recoil';
+import { UserHeaderInfoAtom } from '@/recoil/UserHeaderInfoAtom';
 
 const { Text } = Typography;
 
-export default function UserInfo({
+export default function UserInfo(/* {
   userHeaderInfo,
 }: {
   userHeaderInfo: {
@@ -13,7 +15,8 @@ export default function UserInfo({
     position: string;
     usedVacation: string;
   };
-}) {
+} */) {
+  const userHeaderInfo = useRecoilValue(UserHeaderInfoAtom);
   return (
     <div
       style={{
