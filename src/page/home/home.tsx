@@ -20,9 +20,10 @@ import { addScheduleRequest } from '@/api/mySchedule';
 import MySchedule from '@/page/home/mySchedule';
 import { DUTY_ANNUAL } from '@/data/constants';
 import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
-import { scheduleList } from '@/api/home/scheduleList';
+/* import { scheduleList } from '@/api/home/scheduleList'; */
 import { UserEmailAtom } from '@/recoil/UserEmailAtom';
 import { pendingList } from '@/api/home/pendingList';
+import { useScheduleList } from '@/query/qeuries';
 
 const { RangePicker } = DatePicker;
 
@@ -93,6 +94,9 @@ export default function Home() {
   const [usersYearlySchedulesLoading, setUsersYearlySchedulesLoading] =
     useState(false);
 
+  const { data } = useScheduleList(year);
+  console.log(data);
+
   useEffect(() => {
     const getUsersYearlySchedules = async () => {
       if (!accessToken) {
@@ -100,8 +104,8 @@ export default function Home() {
       }
       try {
         setUsersYearlySchedulesLoading(true);
-        const listResponse = await scheduleList(year);
-        const listResponseData = listResponse.data.response;
+        const listResponse = data;
+        const listResponseData = listResponse?.data.response;
         const sideMyScheduleData = listResponseData
           .filter((item: mySchedule) => item.userEmail === userEmail)
           .map((item: mySchedule) => {
