@@ -11,6 +11,7 @@ import { IsManagerAtom } from '@/recoil/IsManagerAtom';
 import { getUserHeader } from '@/api/home/getUserHeader';
 import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
 import { UserEmailAtom } from '@/recoil/UserEmailAtom';
+import { UserHeaderInfoAtom } from '@/recoil/UserHeaderInfoAtom';
 
 export default function MyHeader() {
   // antd theme
@@ -28,12 +29,14 @@ export default function MyHeader() {
 
   // **네브바에 있는 유저 정보 GET요청**
   // 네브바에 표시될 유저 정보들
-  const [userHeaderInfo, setUserHeaderInfo] = useState({
+  /*   const [userHeaderInfo, setUserHeaderInfo] = useState({
     userName: '',
     profileThumbNail: '',
     position: '',
     usedVacation: '',
-  });
+  }); */
+
+  const setUserHeaderInfo = useSetRecoilState(UserHeaderInfoAtom);
 
   // 매니저여부, 사용자 이메일 set하는 함수
   const setIsManager = useSetRecoilState(IsManagerAtom);
@@ -152,7 +155,7 @@ export default function MyHeader() {
                   />
                 </div>
               ) : (
-                <UserInfo userHeaderInfo={userHeaderInfo} />
+                <UserInfo />
               )}
 
               <Button
