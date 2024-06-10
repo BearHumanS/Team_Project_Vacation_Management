@@ -11,7 +11,7 @@ import { IsManagerAtom } from '@/recoil/IsManagerAtom';
 import { getUserHeader } from '@/api/home/getUserHeader';
 import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
 import { UserEmailAtom } from '@/recoil/UserEmailAtom';
-import { UserHeaderInfoAtom } from '@/recoil/UserHeaderInfoAtom';
+/* import { UserHeaderInfoAtom } from '@/recoil/UserHeaderInfoAtom'; */
 
 export default function MyHeader() {
   // antd theme
@@ -29,14 +29,14 @@ export default function MyHeader() {
 
   // **네브바에 있는 유저 정보 GET요청**
   // 네브바에 표시될 유저 정보들
-  /*   const [userHeaderInfo, setUserHeaderInfo] = useState({
+  const [userHeaderInfo, setUserHeaderInfo] = useState({
     userName: '',
     profileThumbNail: '',
     position: '',
     usedVacation: '',
-  }); */
+  });
 
-  const setUserHeaderInfo = useSetRecoilState(UserHeaderInfoAtom);
+  /*   const setUserHeaderInfo = useSetRecoilState(UserHeaderInfoAtom); */
   const renderCount = useRef(0);
   renderCount.current += 1;
 
@@ -48,13 +48,13 @@ export default function MyHeader() {
   const [isMyHeaderLoading, setIsMyHeaderLoading] = useState(false);
 
   useEffect(() => {
-    console.log('리코일 렌더링 횟수 측정 부모 컴포넌트', renderCount.current);
+    console.log('useState 렌더링 횟수 측정 부모 컴포넌트', renderCount.current);
     const getData = async () => {
       if (!accessToken) {
         return;
       }
       try {
-        console.time('recoil');
+        console.time('useState');
         setIsMyHeaderLoading(true);
         const response = await getUserHeader();
         if (response.status === 200) {
@@ -75,7 +75,7 @@ export default function MyHeader() {
         console.error('헤더 유저정보 로딩 중 에러 발생:', error);
       } finally {
         setIsMyHeaderLoading(false);
-        console.timeEnd('recoil');
+        console.timeEnd('useState');
       }
     };
     getData();
@@ -160,7 +160,7 @@ export default function MyHeader() {
                   />
                 </div>
               ) : (
-                <UserInfo />
+                <UserInfo userHeaderInfo={userHeaderInfo} />
               )}
 
               <Button
