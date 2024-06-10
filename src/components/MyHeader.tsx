@@ -2,7 +2,7 @@ import { signout } from '@/api/auth/signout';
 import { AccessTokenAtom } from '@/recoil/AccessTokkenAtom';
 import { Button, Skeleton, Space, message, theme } from 'antd';
 import { Header } from 'antd/es/layout/layout';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import UserInfo from '@/components/UserInfo';
@@ -36,6 +36,11 @@ export default function MyHeader() {
     usedVacation: '',
   });
 
+  const renderCount = useRef(0);
+  const startTime = useRef(0);
+
+  renderCount.current += 1;
+
   /*   const setUserHeaderInfo = useSetRecoilState(UserHeaderInfoAtom); */
 
   // 매니저여부, 사용자 이메일 set하는 함수
@@ -46,12 +51,21 @@ export default function MyHeader() {
   const [isMyHeaderLoading, setIsMyHeaderLoading] = useState(false);
 
   useEffect(() => {
+    if (startTime.current > 0) {
+      const endTime = performance.now();
+      console.log(
+        `MyHeader useState 렌더링 ${renderCount.current}회가 ${
+          endTime - startTime.current
+        } ms 걸림`,
+      );
+    }
+    startTime.current = performance.now();
+
     const getData = async () => {
       if (!accessToken) {
         return;
       }
       try {
-        console.time('useState');
         setIsMyHeaderLoading(true);
         const response = await getUserHeader();
         if (response.status === 200) {
@@ -72,7 +86,6 @@ export default function MyHeader() {
         console.error('헤더 유저정보 로딩 중 에러 발생:', error);
       } finally {
         setIsMyHeaderLoading(false);
-        console.timeEnd('useState');
       }
     };
     getData();

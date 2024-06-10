@@ -20,13 +20,20 @@ export default function UserInfo({
   /*   const userHeaderInfo = useRecoilValue(UserHeaderInfoAtom); */
 
   const renderCount = useRef(0);
+  const startTime = useRef(0);
+
   renderCount.current += 1;
 
   useEffect(() => {
-    console.log(
-      'useState props 렌더링 횟수 측정 자식 컴포넌트',
-      renderCount.current,
-    );
+    if (startTime.current > 0) {
+      const endTime = performance.now();
+      console.log(
+        `UserInfo useState 렌더링 ${renderCount.current}회가 ${
+          endTime - startTime.current
+        } ms 걸림`,
+      );
+    }
+    startTime.current = performance.now();
   });
 
   return (
