@@ -140,7 +140,7 @@ export default function Home() {
       }
     };
     getUsersYearlySchedules();
-  }, [year, accessToken, userEmail, setUsersYearlySchedulesLoading]);
+  }, [year, accessToken, userEmail, setUsersYearlySchedulesLoading, data]);
 
   const [pendingLoading, setPendingLoading] = useState(false);
 
