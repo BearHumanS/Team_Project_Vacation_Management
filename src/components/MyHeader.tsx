@@ -2,7 +2,7 @@ import { signout } from '@/api/auth/signout';
 import { AccessTokenAtom } from '@/recoil/AccessTokkenAtom';
 import { Button, Skeleton, Space, message, theme } from 'antd';
 import { Header } from 'antd/es/layout/layout';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import UserInfo from '@/components/UserInfo';
@@ -37,8 +37,6 @@ export default function MyHeader() {
   });
 
   /*   const setUserHeaderInfo = useSetRecoilState(UserHeaderInfoAtom); */
-  const renderCount = useRef(0);
-  renderCount.current += 1;
 
   // 매니저여부, 사용자 이메일 set하는 함수
   const setIsManager = useSetRecoilState(IsManagerAtom);
@@ -48,7 +46,6 @@ export default function MyHeader() {
   const [isMyHeaderLoading, setIsMyHeaderLoading] = useState(false);
 
   useEffect(() => {
-    console.log('useState 렌더링 횟수 측정 부모 컴포넌트', renderCount.current);
     const getData = async () => {
       if (!accessToken) {
         return;
