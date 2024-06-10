@@ -48,7 +48,7 @@ export default function MyHeader() {
   const [isMyHeaderLoading, setIsMyHeaderLoading] = useState(false);
 
   useEffect(() => {
-    console.log('리코일 렌더링 횟수 측정 부모 컴포넌트', renderCount.current);
+    console.log('useState 렌더링 횟수 측정 부모 컴포넌트', renderCount.current);
     const getData = async () => {
       if (!accessToken) {
         return;
