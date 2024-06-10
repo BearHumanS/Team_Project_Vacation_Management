@@ -102,7 +102,7 @@ export default function Home() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (location.pathname === '/home') {
+    if (location.pathname === '/') {
       queryClient.invalidateQueries({ queryKey: ['scheduleList', year] });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
