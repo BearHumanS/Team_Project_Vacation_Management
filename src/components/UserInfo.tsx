@@ -1,13 +1,13 @@
 import { Badge, Typography, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import { POSITIONS } from '@/data/constants';
-import { useRecoilValue } from 'recoil';
-import { UserHeaderInfoAtom } from '@/recoil/UserHeaderInfoAtom';
+/* import { useRecoilValue } from 'recoil';
+import { UserHeaderInfoAtom } from '@/recoil/UserHeaderInfoAtom'; */
 import { useEffect, useRef } from 'react';
 
 const { Text } = Typography;
 
-export default function UserInfo(/* {
+export default function UserInfo({
   userHeaderInfo,
 }: {
   userHeaderInfo: {
@@ -16,14 +16,17 @@ export default function UserInfo(/* {
     position: string;
     usedVacation: string;
   };
-} */) {
-  const userHeaderInfo = useRecoilValue(UserHeaderInfoAtom);
+}) {
+  /*   const userHeaderInfo = useRecoilValue(UserHeaderInfoAtom); */
 
   const renderCount = useRef(0);
   renderCount.current += 1;
 
   useEffect(() => {
-    console.log('리코일 렌더링 횟수 측정 자식 컴포넌트', renderCount.current);
+    console.log(
+      'useState props 렌더링 횟수 측정 자식 컴포넌트',
+      renderCount.current,
+    );
   });
 
   return (
