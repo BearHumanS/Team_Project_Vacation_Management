@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { POSITIONS } from '@/data/constants';
 import { useRecoilValue } from 'recoil';
 import { UserHeaderInfoAtom } from '@/recoil/UserHeaderInfoAtom';
+import { useEffect, useRef } from 'react';
 
 const { Text } = Typography;
 
@@ -17,6 +18,14 @@ export default function UserInfo(/* {
   };
 } */) {
   const userHeaderInfo = useRecoilValue(UserHeaderInfoAtom);
+
+  const renderCount = useRef(0);
+  renderCount.current += 1;
+
+  useEffect(() => {
+    console.log('리코일 렌더링 횟수 측정 자식 컴포넌트', renderCount.current);
+  });
+
   return (
     <div
       style={{
