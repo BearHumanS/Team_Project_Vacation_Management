@@ -54,7 +54,7 @@ export default function MyHeader() {
         return;
       }
       try {
-        console.time('recoil');
+        console.time('useState');
         setIsMyHeaderLoading(true);
         const response = await getUserHeader();
         if (response.status === 200) {
@@ -75,7 +75,7 @@ export default function MyHeader() {
         console.error('헤더 유저정보 로딩 중 에러 발생:', error);
       } finally {
         setIsMyHeaderLoading(false);
-        console.timeEnd('recoil');
+        console.timeEnd('useState');
       }
     };
     getData();
