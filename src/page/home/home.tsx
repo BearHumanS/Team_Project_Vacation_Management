@@ -24,6 +24,8 @@ import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
 import { UserEmailAtom } from '@/recoil/UserEmailAtom';
 import { pendingList } from '@/api/home/pendingList';
 import { useScheduleList } from '@/query/qeuries';
+import { useLocation } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 const { RangePicker } = DatePicker;
 
@@ -95,6 +97,16 @@ export default function Home() {
     useState(false);
 
   const { data } = useScheduleList(year);
+
+  const location = useLocation();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (location.pathname === '/home') {
+      queryClient.invalidateQueries({ queryKey: ['scheduleList', year] });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location, queryClient]);
 
   useEffect(() => {
     const getUsersYearlySchedules = async () => {
