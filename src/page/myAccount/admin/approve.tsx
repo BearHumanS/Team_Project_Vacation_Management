@@ -35,33 +35,34 @@ export default function Approve() {
 
   const accessToken = useRecoilValue(AccessTokenAtom);
 
-  useEffect(() => {
+  const fetchVacationRequests = async () => {
     setIsvacationRequestsLoading(true);
-    const getData = async () => {
-      if (!accessToken) {
-        return;
+    if (!accessToken) {
+      return;
+    }
+    try {
+      const response = await getVacationRequests();
+      if (response.status === 200) {
+        const vacationRequestsData = response.data
+          .response as VacationRequestType[];
+        // 성공했을때
+        setVacationRequests(
+          vacationRequestsData.map((el) => {
+            return { ...el, key: el.id };
+          }),
+        );
       }
-      try {
-        const response = await getVacationRequests();
-        if (response.status === 200) {
-          const vacationRequestsData = response.data
-            .response as VacationRequestType[];
-          // 성공했을때
-          setVacationRequests(
-            vacationRequestsData.map((el) => {
-              return { ...el, key: el.id };
-            }),
-          );
-          return;
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        console.error('연가/당직 데이터를 불러오는 중 에러발생 : ', error);
-      } finally {
-        setIsvacationRequestsLoading(false);
-      }
-    };
-    getData();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error('연가/당직 데이터를 불러오는 중 에러발생 : ', error);
+    } finally {
+      setIsvacationRequestsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchVacationRequests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   // 승인
@@ -83,6 +84,7 @@ export default function Approve() {
           content: response.data.response,
         });
       }
+      fetchVacationRequests();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
