@@ -95,7 +95,6 @@ export default function Home() {
     useState(false);
 
   const { data } = useScheduleList(year);
-  console.log(data);
 
   useEffect(() => {
     const getUsersYearlySchedules = async () => {
