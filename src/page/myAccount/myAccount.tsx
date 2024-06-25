@@ -170,7 +170,8 @@ export default function MyAccount() {
         );
         if (response?.status === 200) {
           const data = response.data;
-          imageUrl = data.url; // 이미지 URL을 받아옴
+          /* imageUrl = data.url; */ // 이미지 URL을 받아옴
+          imageUrl = data.fileName; //S3 데이터
         } else {
           throw new Error('이미지 업로드에 실패하였습니다.');
         }

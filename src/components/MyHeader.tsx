@@ -2,7 +2,7 @@ import { signout } from '@/api/auth/signout';
 import { AccessTokenAtom } from '@/recoil/AccessTokkenAtom';
 import { Button, Skeleton, Space, message, theme } from 'antd';
 import { Header } from 'antd/es/layout/layout';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import UserInfo from '@/components/UserInfo';
@@ -11,6 +11,7 @@ import { IsManagerAtom } from '@/recoil/IsManagerAtom';
 import { getUserHeader } from '@/api/home/getUserHeader';
 import { ReRenderStateAtom } from '@/recoil/ReRenderStateAtom';
 import { UserEmailAtom } from '@/recoil/UserEmailAtom';
+import { UserHeaderInfoAtom } from '@/recoil/UserHeaderInfoAtom';
 
 export default function MyHeader() {
   // antd theme
@@ -28,12 +29,19 @@ export default function MyHeader() {
 
   // **네브바에 있는 유저 정보 GET요청**
   // 네브바에 표시될 유저 정보들
-  const [userHeaderInfo, setUserHeaderInfo] = useState({
+  /*   const [userHeaderInfo, setUserHeaderInfo] = useState({
     userName: '',
     profileThumbNail: '',
     position: '',
     usedVacation: '',
-  });
+  }); */
+
+  const renderCount = useRef(0);
+  const startTime = useRef(0);
+
+  renderCount.current += 1;
+
+  const setUserHeaderInfo = useSetRecoilState(UserHeaderInfoAtom);
 
   // 매니저여부, 사용자 이메일 set하는 함수
   const setIsManager = useSetRecoilState(IsManagerAtom);
@@ -43,6 +51,16 @@ export default function MyHeader() {
   const [isMyHeaderLoading, setIsMyHeaderLoading] = useState(false);
 
   useEffect(() => {
+    if (startTime.current > 0) {
+      const endTime = performance.now();
+      console.log(
+        `MyHeader recoil 렌더링 ${renderCount.current}회가 ${
+          endTime - startTime.current
+        } ms 걸림`,
+      );
+    }
+    startTime.current = performance.now();
+
     const getData = async () => {
       if (!accessToken) {
         return;
@@ -152,7 +170,7 @@ export default function MyHeader() {
                   />
                 </div>
               ) : (
-                <UserInfo userHeaderInfo={userHeaderInfo} />
+                <UserInfo /* userHeaderInfo={userHeaderInfo} */ />
               )}
 
               <Button
