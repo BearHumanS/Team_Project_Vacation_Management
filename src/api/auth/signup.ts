@@ -12,7 +12,7 @@ interface valuseType {
 
 export const signup = async (values: valuseType) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { confirm_password, ...otherData } = values;
+  const { ...otherData } = values;
 
   const response = await customAxios.post('/v1/auth/signup', otherData, {
     withCredentials: true,

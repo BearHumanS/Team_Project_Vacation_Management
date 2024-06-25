@@ -101,7 +101,7 @@ export default function Signin({
         onFinish={handleSignin}
         ref={formRef}
       >
-        <Form.Item label="이메일 (관리자: jw@naver.com)" name="userEmail">
+        <Form.Item label="이메일 (관리자: gh@naver.com)" name="userEmail">
           <Input size="large" />
         </Form.Item>
         <Form.Item label="비밀번호 (password1234!@)" name="userPassword">
